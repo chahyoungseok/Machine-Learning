@@ -553,7 +553,7 @@ l2_model = keras.models.Sequential([
  - 예측값이 실제값과 완전히 동일할 때 엔트로피와 동일한 값이 나온다
  - 차이가 많이날 때 기하급수적으로 값이 증가한다.
 
-<br>
+<br><br><br><br>
 
 ## CNN
 
