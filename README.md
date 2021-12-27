@@ -844,7 +844,7 @@ MLP에서 Dense Layer가 노드의 수를 정한다면, CNN에서는 kernel이 �
 그러면 입력에서 Convolution 후에 치수를 변경하지 않도록 경계 주위에 0으로 채우게됩니다.<br>
 이러한 방법을 zero padding이라고 합니다.
 
-<br>
+<br><br>
 
 ### Pooling operations
 
