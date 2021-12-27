@@ -570,6 +570,8 @@ l2_model = keras.models.Sequential([
 
 ![image](https://user-images.githubusercontent.com/29851990/147451468-257e091a-a59c-4cc9-8748-69246dab21ca.png)
 
+<br>
+
 #### Regularization
 
 일반적으로 사용하는 정규화의 방법에는 Dropout이 있습니다.<br>
@@ -591,7 +593,6 @@ MLP에서 Dense Layer가 노드의 수를 정한다면, CNN에서는 kernel이 �
 
 ![image](https://user-images.githubusercontent.com/29851990/147455012-fe725b8d-e642-4c2a-a59b-d335124af7cd.png)
 
-<br>
 다만, 입력과 출력의 Feature Map 치수가 동일해야하는 경우 option='same'을 사용합니다.<br>
 그러면 입력에서 Convolution 후에 치수를 변경하지 않도록 경계 주위에 0으로 채우게됩니다.<br>
 이러한 방법을 zero padding이라고 합니다.
