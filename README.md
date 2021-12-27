@@ -570,10 +570,6 @@ l2_model = keras.models.Sequential([
 
 ![image](https://user-images.githubusercontent.com/29851990/147451468-257e091a-a59c-4cc9-8748-69246dab21ca.png)
 
-밑의 그림에서 2번째 그림의 두께가 사용한 필터의 개수를 나타냅니다.(CNN 구조)
-
-![image](https://user-images.githubusercontent.com/29851990/147451480-b3e54ee4-f2cf-4962-8eb5-f884b7dff111.png)
-
 #### Regularization
 
 일반적으로 사용하는 정규화의 방법에는 Dropout이 있습니다.<br>
