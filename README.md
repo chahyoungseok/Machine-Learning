@@ -7,10 +7,10 @@
     <li><a href="#keras-development">Keras Development</a></li>
     <li><a href="#import-dataset-mnist-fashion">import dataset MNIST fashion</a></li>
     <li><a href="#sequential-model">Sequential Model</a></li>
-    <li><a href="#glossary">lossary</a></li>
-    <li><a href="#day-6">Day 6</a></li>
-    <li><a href="#day-7">Day 7</a></li>
-    <li><a href="#day-8">Day 8</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+    <li><a href="#perceptron">Perceptron</a></li>
+    <li><a href="#overfit">Overfit</a></li>
+    <li><a href="#mlp">MLP</a></li>
     <li><a href="#day-9">Day 9</a></li>
     <li><a href="#day-10">Day 10</a></li>
   </ol>
@@ -53,9 +53,71 @@ Dense
 
 <br><br>
 
+### keras development example
+
+``` keras development example
+import tensorflow as tf
+from tensorflow import keras
+import numpy as np
+import matplotlib.pyplot as plt
+
+real_input = np.array(
+        [[1, 0, 1, 0, 1, 0, 1, 0, 1, 0], [0, 1, 0, 1, 0, 1, 0, 1, 0, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+         [0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [1, 0, 0, 1, 0, 0, 1, 0, 0, 1], [0, 1, 1, 0, 1, 1, 0, 1, 1, 0],
+         [0, 1, 0, 0, 1, 0, 0, 1, 0, 0], [1, 0, 1, 1, 0, 1, 1, 0, 1, 1], [0, 0, 1, 0, 0, 1, 0, 0, 1, 0],
+         [1, 1, 0, 1, 1, 0, 1, 1, 0, 1]])
+
+real_output = np.array([[1,0,0,0,0,0,0,0,0,0],[0,1,0,0,0,0,0,0,0,0],[0,0,1,0,0,0,0,0,0,0],
+                       [0,0,0,1,0,0,0,0,0,0],[0,0,0,0,1,0,0,0,0,0],[0,0,0,0,0,1,0,0,0,0],
+                       [0,0,0,0,0,0,1,0,0,0],[0,0,0,0,0,0,0,1,0,0],[0,0,0,0,0,0,0,0,1,0],
+                       [0,0,0,0,0,0,0,0,0,1]])
+
+
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(10, activation='relu',input_shape=(10,)),
+    tf.keras.layers.Dense(10, activation='softmax')
+])
+
+model.compile(optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4), loss='mse', metrics=['accuracy'])
+
+model.fit(real_input*np.random.uniform(0.8,0.9) + np.random.uniform(0,0.1), real_output, epochs=10000)
+
+#input_patten2
+test_input = np.array([[0, 0.9, 0, 0.91, 0, 0.99, 0, 0.92, 0, 1]])
+test_output = np.array([[0,1,0,0,0,0,0,0,0,0]])
+prediction = model.predict(test_input)
+print(prediction)
+
+model.save("PattenTrain.h5")
+
+```
+
+#### 데이터 셋 <br>
+입력으로 10개의 패턴을 가진 배열을 생성합니다. : real_input <br>
+출력으로는 10개의 노드에 해당 패턴이 mapping될 수 있게 배열을 생성합니다 : real_output
+
+#### 모델 생성 <br>
+모델은 2차원배열을 1차원배열로 바꿀 이유가없으니 Flatten을 사용하지 않습니다.<br>
+Dense layer를 사용하였고, 후에 predict을 통해 분포를 확인하기위해 softmax를 사용하였습니다.
+
+#### 모델훈련 <br>
+모델을 학습시키려면 방대한양의 데이터가 필요하므로 기존에 입력데이터에 랜덤값(0.8, 0.9)을 곱한 후, 랜덤 값(0,0.1)을 더하고 모델훈련을 시킵니다.
+
+#### 모델 예측
+테스트 데이터로는 test_input을 만들어 기존 패턴과 근사하게 만들어 predict해봅니다.
+
+#### 모델 저장 및 로드
+model.save("PattenTrain.h5")를 통해 모델을 저장시키고, 새로운 파일 에서 keras.models.load_model("PattenTrain.h5")을 통해 모델을 가져와 summary와 perdict을 해보아 모델이 제대로 불러와 졌는지 확인하였습니다.
+
+![image](https://user-images.githubusercontent.com/29851990/147450584-7c568169-6183-4c7b-b1c0-8bb4ae9ca90f.png)
+
+
+<br><br>
+
 ## import dataset mnist fashion 
 https://www.tensorflow.org/tutorials/keras/classification?hl=ko
 
+``` dataset
 import tensorflow as tf / 텐서플로우 import<br>
 from tensorflow import keras / keras API import<br>
 import numpy as np / numpy import(helper 라이브러리)<br>
@@ -70,14 +132,21 @@ plt.colorbar() // 밑의 그림에 오른쪽 바생성<br>
 plt.grid(False) // 밑의 그림에서 수치마다 줄긋는 UI를 생성할지 말지<br>
 plt.show() // 그래프를 띄움<br>
 
+```
+
 ![image](https://user-images.githubusercontent.com/29851990/147409654-a7e5cab0-3886-4fae-adac-285c77734a09.png)
 <br>
+
+``` dataset
 plt.figure(figsize=(10,10)) //모양의 사이즈를 설정한다<br>
 plt.subplot(a,b,i+1) // a는 세로, b는 가로 i+1은 몇번째<br>
 plt.xticks([]) //괄호안에 설정하면 x축 좌표를 만들수있음<br>
 plt.yticks([]) //괄호안에 설정하면 y축 좌표를 만들수있음<br>
 plt.imshow(train_images[i], cmap=plt.cm.binary) // cmap=plt.cm.binary가 회색조로 이미지를 표시하는 것<br>
 plt.xlabel(class_names[train_labels[i]]) // 밑의 사진 확대하면 그림밑에 라벨있음<br>
+
+```
+
 ![image](https://user-images.githubusercontent.com/29851990/147409670-a6154280-8f26-40bb-9d7a-fe2c00f89798.png)
 <br><br>
 
@@ -135,7 +204,7 @@ Sequential 모델은 다음의 경우에 적합하지 않습니다.
 
 <br><br><br><br>
 
-### glossary
+## glossary
 
 Dataset
  - 데이터베이스 자원을 효율적으로 활용하고자 도입된 개념입니다. 
@@ -207,5 +276,264 @@ optimizer
 
 <br><br><br><br>
 
+## Perceptron
+
+퍼셉트론 
+ - 다수의 입력을 받아 하나의 신호를 출력하는 알고리즘
+
+해당 식 
+ - x1*w1 + x2*w2 + b(bias) = y
+
+![image](https://user-images.githubusercontent.com/29851990/147449395-0b5d896d-08cf-49bd-bbff-fdb65d2a6c65.png)
+
+위의 식을 활용해 평면상의 선을 그어 적합한 기울기를 찾아냅니다.<br>
+하지만 XOR 게이트는 밑의 그림처럼 하나의 선으로는 분류하기 불가능하여 다중퍼셉트론을 사용합니다.
+
+![image](https://user-images.githubusercontent.com/29851990/147449425-2e0658fc-c699-45ac-adee-ee67ed265e0b.png)
+<br>
 
 
+### perceptron example
+``` python
+
+import tensorflow as tf
+from tensorflow import keras
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+# inputData01에서 0과 1을 적절히 조합할만한 배열을 만듭니다.
+inputData01 = np.array([0,0,1,1,0,1,0,1]).reshape(2,4)
+
+# inputData02에서 0과 1을 적절히 조합할만한 배열을 만듭니다.
+inputData02 = np.array([1,1,-1,-1,1,-1,1,-1]).reshape(2,4)
+
+# 퍼셉트론이란 다수의 입력을 받아 특정알고리즘을 바탕으로 하나의 신호를 출력하여 그결과에 따라 흐른다(1), 안흐른다(0)으로 출력하는 알고리즘을 말합니다.
+# 단층퍼셉트론으로는 XOR게이트를 만들 수 없으므로 다중퍼셉트론을 구현합니다.
+# 0,0 / 1,1 일때와 1,0 / 0,1일때로 나눈 결과값을 만들수 있는 함수를 만들어줍니다.
+# perceptron1,2,3은 inputData01에 해당하는 perceptron
+# perceptron4,5,6은 inputData02에 해당하는 perceptron
+
+# (0,0)이 아니라면 무조건 1반환
+def perceptron1 (input1, input2) :
+    weight1 = 1
+    weight2 = 1
+    bias = 0
+    result = (weight1 * input1) + (weight2 * input2) + bias;
+
+    if(result > 0) :
+        return 1
+    else :
+        return 0
+
+# (1,1)이 아니라면 무조건 0반환
+def perceptron2(input1, input2):
+    weight1 = 1
+    weight2 = 1
+    bias = -1
+    result = (weight1 * input1) + (weight2 * input2) + bias;
+
+    if (result > 0):
+        return 1
+    else:
+        return 0
+
+# 같으면 0, 다르면 1이되게 함수구현 다를때는 무조건 1,0이 perceptron3함수에 인자로 전달되게끔 perceptron1,2를 설계
+def perceptron3(input1, input2):
+    weight1 = 1
+    weight2 = -2
+    bias = 0
+    result = (weight1 * input1) + (weight2 * input2) + bias;
+
+    if (result > 0):
+        return 1
+    else:
+        return 0
+
+# (-1,-1)이아니라면 무조건 1반환
+def perceptron4 (input1, input2) :
+    weight1 = 1
+    weight2 = 1
+    bias = 2
+    result = (weight1 * input1) + (weight2 * input2) + bias;
+
+    if(result > 0) :
+        return 1
+    else :
+        return 0
+
+# (1,1) 이아니라면 무조건 0반환
+def perceptron5(input1, input2):
+    weight1 = 1
+    weight2 = 1
+    bias = -1
+    result = (weight1 * input1) + (weight2 * input2) + bias;
+
+    if (result > 0):
+        return 1
+    else:
+        return 0
+
+# 같으면 0, 다르면 1이되게 함수구현 다를때는 무조건 1,0이 perceptron6함수에 인자로 전달되게끔 perceptron4,5를 설계
+def perceptron6(input1, input2):
+    weight1 = 1
+    weight2 = -2
+    bias = 0
+    result = (weight1 * input1) + (weight2 * input2) + bias;
+
+    if (result > 0):
+        return 1
+    else:
+        return 0
+
+for i in range(0,4) :
+    print("입력 :" + str(inputData01[0,i]) + "," + str(inputData01[1,i]) + " 출력 :" + str(perceptron3(perceptron1(inputData01[0,i],inputData01[1,i]),perceptron2(inputData01[0,i],inputData01[1,i]))))
+
+for i in range(0,4) :
+    print("입력 :" + str(inputData02[0,i]) + "," + str(inputData02[1,i]) + " 출력 :" + str(perceptron6(perceptron4(inputData02[0,i],inputData02[1,i]),perceptron5(inputData02[0,i],inputData02[1,i]))))
+```
+
+하지만 다중퍼셉트론을 사용하면 가중치와 바이어스를 하나하나 설정해야 되므로 이것을 학습시키기 위해서 backpropagation을 사용합니다.
+
+```python
+
+import tensorflow as tf
+from tensorflow import keras
+import numpy as np
+import matplotlib.pyplot as plt
+
+def sigmoid(x) :
+    return 1/(1+np.exp(-x))
+
+x = np.array([[1,1],[1,0],[0,1],[0,0]])
+y = np.array([[0],[1],[1],[0]])
+
+#-1,1을 사용하려면 위에것을 주석 후 밑의 문장 주석해제
+#x = np.array([[1,1],[1,-1],[-1,1],[-1,-1]])
+#y = np.array([[-1],[1],[1],[-1]])
+
+
+#모델 구성하기 입력층 노드2개와 은닉층 2개의 노드 또, 출력층 1개의 노드이므로 이렇게 구성하였습니다. (units, input_shape)
+#activation Function은 미분가능한 0,1을 출력하는 sigmoid함수를 사용하였습니다.
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(units=2, activation='sigmoid', input_shape=(2,)),
+    tf.keras.layers.Dense(units=1, activation='sigmoid')
+])
+
+#Gradient Descent 와 SGD의 차이점은 전자는 전체데이터를 가지고 수렴을시키고
+#SGD는 일부데이터를 가지고 빠르게 수렴을 시킨다.
+model.compile(optimizer=tf.keras.optimizers.SGD(learning_rate=0.1), loss='mse')
+
+#batch_size는 데이터셋을 나눌때의 크기를 의미합니다.
+history = model.fit(x,y,epochs=15000,batch_size=1)
+
+prediction = model.predict(x)
+
+print("예측 Output : ", prediction)
+
+plt.figure()
+plt.grid(True)
+weight_ary = model.get_weights()
+
+print(weight_ary)
+
+plt.scatter(weight_ary[0][0][0],weight_ary[1][0],color="r",edgecolors="r")
+plt.scatter(weight_ary[0][0][1],weight_ary[1][0],color="r",edgecolors="r")
+
+plt.scatter(weight_ary[0][1][0],weight_ary[1][1],color="b",edgecolors="b")
+plt.scatter(weight_ary[0][1][1],weight_ary[1][1],color="b",edgecolors="b")
+
+plt.scatter(weight_ary[2][0][0],weight_ary[3][0],color="g",edgecolors="g")
+plt.scatter(weight_ary[2][1][0],weight_ary[3][0],color="g",edgecolors="g")
+
+plt.xticks([-10,-8,-6,-4,-2,0,2,4,6,8,10])
+plt.yticks([-10,-8,-6,-4,-2,0,2,4,6,8,10])
+plt.show()
+
+```
+backpropagation 알고리즘은 미분가능한 함수를 activation함수로 사용해야하는데 그것이 가장알맞은 함수가 sigmoid함수입니다.<br>
+출력 값을 1 또는 0만을 가질수 있습니다.<br>
+
+![image](https://user-images.githubusercontent.com/29851990/147450092-3da6b918-7442-4309-8153-9b755a449980.png)
+
+## Optimizer
+
+Gradient Descent : 해당 함수의 최소값 위치를 찾기위해 비용합수의 그레디언트 반대 방향으로 정의한 step size를 가지고 조금씩 움직여가면서 최적의 파라미터를 찾으려는 방법입니다.
+ 1. Batch Gradient Descent : 전체 데이터를 사용
+ 2. Stochastic Gradient Descent : 하나의 데이터만을 사용
+ 3. Mini-batch Gradient Descent : 데이터의 일부만을 사용
+: 오늘날에는 계산비용을 고려해 효율적인 탐색법인 3번이 가장 많이 쓰입니다.
+추가로 공부해볼 키워드 : Momentum
+
+![image](https://user-images.githubusercontent.com/29851990/147450136-3b4e4d88-2054-4297-b0cd-72a5610c2c92.png)
+
+
+## overfit
+
+### 과대적합을 방지하기 위한 전략
+- 더 많은 훈련 데이터를 모읍니다.
+- 네트워크의 용량을 줄입니다.
+- 가중치 규제를 추가합니다.
+- 드롭아웃을 추가합니다.
+
+<br><br>
+
+### 가중치 규제
+ - 간단한 모델은 복잡한 것보다 과대적합되는 경향이 작을 것입니다.
+ - 엔트로피가 작은 모델
+ - 가중치가 작은 값을 가지도록 네트워크의 복잡도에 제약을 가하는 것
+ - L1 규제 : 가중치의 절대값 합에 비례하여 가중치에 페널티를 주는 정규화 유형입니다. 희소 특성에 의존하는 모델에서 L1 정규화는 관련성이 없거나 매우 낮은 특성의 가중치를 정확히 0으로 유도하여 모델에서 해당 특성을 배제하는 데 도움이 됩니다. L2 정규화와 대비되는 개념입니다.
+ - 희소특성 : 대부분의 값이 0이거나 비어 있는 특성 벡터입니다. 예를 들어 1 값 하나와 0 값 백만 개를 포함하는 벡터는 희소 벡터입니다. 또 다른 예로서, 검색어의 단어는 희소 특성일 수 있습니다. 특정 언어에서 가능한 단어는 무수히 많지만 특정 검색어에는 몇 개의 단어만 나오기 때문입니다.
+ - L2 규제 : 가중치 제곱의 합에 비례하여 가중치에 페널티를 주는 정규화 유형입니다. L2 정규화는 높은 긍정 값 또는 낮은 부정 값(??)을 갖는 이상점 가중치를 0은 아니지만 0에 가깝게 유도하는 데 도움이 됩니다. L1 정규화와 대비되는 개념입니다. L2 정규화는 선형 모델의 일반화를 항상 개선합니다.
+ - L1 규제는 일부 가중치 파라미터를 0으로 만듭니다. L2 규제는 가중치 파라미터를 제한하지만 완전히 0으로 만들지는 않습니다. 이것이 L2 규제를 더 많이 사용하는 이유 중 하나입니다.
+ ``` overfit
+l2_model = keras.models.Sequential([
+    keras.layers.Dense(16, kernel_regularizer=keras.regularizers.l2(0.001),
+                       activation='relu', input_shape=(NUM_WORDS,)),
+    keras.layers.Dense(16, kernel_regularizer=keras.regularizers.l2(0.001),
+                       activation='relu'),
+    keras.layers.Dense(1, activation='sigmoid')
+])
+```
+
+<br>
+
+### Drop out
+ - 샘플들 보다 더 많은 특성(feature)들이 주어지면, 선형 모델은 오버핏(overfit) 될 수 있습니다.
+ - 마지막 결과를 계산하기 위해서 사용되는 연산의 몇몇 뉴런들을 누락(drop out) 시킨다는 개념
+ - 신경망 모델이 복잡해질 때 가중치 감소만으로는 어려운데 드롭아웃 기법은 뉴런의 연결을 임의로 삭제하는 것
+ - 훈련할 때 임의의 뉴런을 골라 삭제하여 신호를 전달하지 않게 한다. 테스트할 때는 모든 뉴런을 사용한다.
+ - ex) https://www.tensorflow.org/tutorials/keras/overfit_and_underfit?hl=ko
+
+<br>
+
+### Cross Entropy
+ - 틀릴 수 있는 정보를 가지고 구한 최적의 엔트로피 값 즉, 불확실성 정보의 양
+ - 틀릴 수 있는 정보의 예제로는 머신러닝 모델의 아웃풋(예측값)
+ - 예측값을 통해 실제값과 얼마나 근사한지 알아보는 척도 
+ - ![image](https://user-images.githubusercontent.com/29851990/147451292-96b0c3f8-df66-4c8d-a24a-9f34756ed7bb.png)
+ - 예측값이 실제값과 완전히 동일할 때 엔트로피와 동일한 값이 나온다
+ - 차이가 많이날 때 기하급수적으로 값이 증가한다.
+
+<br>
+
+### CNN (Convolutional Neural Network)
+
+쓰이는 예시 
+ - 이미지나 영상데이터를 처리할 때 쓰임
+
+왜 쓰이게 되었나 
+ - DNN의 문제점인 ovefiting에서 출발합니다. 
+ - 너무 딮하게 훈련을하게되면 예를들어 강아지 사진같은 경우 내가 보여준 강아지사진이 아니고 조금만 다른 강아지사진이면 그것을 강아지라고 인식을 안하는 문제가 발생되어 적절히 특징을 잡아주는 방식이 필요했습니다. 
+ - 그에 사용된 기술이 Convolutional 이고, 그 방식중에는 Zero Padding 과같은 기술이있습니다.
+ - 그리고 Stride라는 개념이 있는데 이는 효율성을 나타냅니다. 
+ - Convolutional을 할 때, 한칸한칸씩 움직이는 것이아니라 움직이는 거리를 정해주는것입니다.
+ - 따라서, 이와같이 구조를 짜게되면 모든 레이어가 이어져있는 것이 아닌 필요없는 레이어들간의 관계에는 끊어나감으로서, overfiting을 막아냅니다.
+
+![image](https://user-images.githubusercontent.com/29851990/147451468-257e091a-a59c-4cc9-8748-69246dab21ca.png)
+
+밑의 그림에서 2번째 그림의 두께가 사용한 필터의 개수를 나타냅니다.(CNN 구조)
+
+![image](https://user-images.githubusercontent.com/29851990/147451480-b3e54ee4-f2cf-4962-8eb5-f884b7dff111.png)
+
+## MLP
