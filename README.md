@@ -12,7 +12,6 @@
     <li><a href="#loss-function">Loss Function</a></li>
     <li><a href="#optimizer">Optimizer</a></li>
     <li><a href="#overfit">Overfit</a></li>
-    <li><a href="#mlp">MLP</a></li>
     <li><a href="#cnn">CNN</a></li>
   </ol>
 </details>
