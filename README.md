@@ -591,10 +591,6 @@ L2 정규화는 가중치를 0은 아니지만 0에 가깝게 유도하는데 �
 ### Convolution
 MLP에서 Dense Layer가 노드의 수를 정한다면, CNN에서는 kernel이 그 작업을 합니다. <br>
 또한 Convolution이란 합성 곱 처리 결과로부터 Feature Map을 만드는 연산을 칭합니다.<br>
-아래와 같이 Feature Map은 계속해서 다른 Feature Map으로 변환이 됩니다.
-
-![image](https://user-images.githubusercontent.com/29851990/147455012-fe725b8d-e642-4c2a-a59b-d335124af7cd.png)
-
 다만, 입력과 출력의 Feature Map 치수가 동일해야하는 경우 option='same'을 사용합니다.<br>
 그러면 입력에서 Convolution 후에 치수를 변경하지 않도록 경계 주위에 0으로 채우게됩니다.<br>
 이러한 방법을 zero padding이라고 합니다.
