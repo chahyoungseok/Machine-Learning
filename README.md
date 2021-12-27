@@ -16,7 +16,7 @@
   </ol>
 </details>
 
-## keras development
+## Keras Development
 
 1. 데이터 생성 <br>
 2. 모델 구축 model = Sequential(); / model.add(...) <br>
@@ -151,7 +151,7 @@ plt.xlabel(class_names[train_labels[i]]) // 밑의 사진 확대하면 그림밑
 <br><br>
 
 <br><br><br><br>
-## sequential model
+## Sequential model
 
 Sequential 모델은 각 레이어에 정확히 하나의 입력 텐서와 하나의 출력 텐서가 있는 일반 레이어 스택에 적합합니다.
 
@@ -293,7 +293,7 @@ optimizer
 <br>
 
 
-### perceptron example
+### Perceptron Example
 ``` python
 
 import tensorflow as tf
@@ -468,7 +468,7 @@ Gradient Descent : 해당 함수의 최소값 위치를 찾기위해 비용합�
 ![image](https://user-images.githubusercontent.com/29851990/147450136-3b4e4d88-2054-4297-b0cd-72a5610c2c92.png)
 
 
-## overfit
+## Overfit
 
 ### 과대적합을 방지하기 위한 전략
 - 더 많은 훈련 데이터를 모읍니다.
