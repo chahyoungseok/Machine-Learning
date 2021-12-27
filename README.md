@@ -751,7 +751,7 @@ L2 정규화는 가중치를 0은 아니지만 0에 가깝게 유도하는데 �
 
 <br>
 
-## CNN (Convolutional Neural Network)
+## CNN
 
 CNN은 분류문제를 해결하는데 쓰입니다.<br>
 
