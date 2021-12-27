@@ -5,7 +5,6 @@
   <summary>Table of Contents</summary>
   <ol>
     <li><a href="#keras-development">Keras Development</a></li>
-    <li><a href="#import-dataset-mnist-fashion">import dataset MNIST fashion</a></li>
     <li><a href="#sequential-model">Sequential Model</a></li>
     <li><a href="#glossary">Glossary</a></li>
     <li><a href="#perceptron">Perceptron</a></li>
@@ -113,44 +112,6 @@ model.save("PattenTrain.h5")를 통해 모델을 저장시키고, 새로운 파�
 
 ![image](https://user-images.githubusercontent.com/29851990/147450584-7c568169-6183-4c7b-b1c0-8bb4ae9ca90f.png)
 
-
-<br><br>
-
-## import dataset mnist fashion 
-https://www.tensorflow.org/tutorials/keras/classification?hl=ko
-
-``` dataset
-import tensorflow as tf / 텐서플로우 import<br>
-from tensorflow import keras / keras API import<br>
-import numpy as np / numpy import(helper 라이브러리)<br>
-import matplotlib.pyplot as plt / (helper 라이브러리)<br>
-
-fashion_mnist = keras.datasets.fashion_mnist; //keras를 import해 데이터셋을 실험용으로 가져온다.<br>
-(train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data(); //해당 데이터셋의 데이터를 로드한다. 그러면 4개의 Numpy배열이 반환된다.<br>
-
-plt.figure() //매트랩라이브러리에서 모양을 생성해준다.<br>
-plt.imshow(train_images[0]) // 해당이미지를 띄워준다.<br>
-plt.colorbar() // 밑의 그림에 오른쪽 바생성<br>
-plt.grid(False) // 밑의 그림에서 수치마다 줄긋는 UI를 생성할지 말지<br>
-plt.show() // 그래프를 띄움<br>
-
-```
-
-![image](https://user-images.githubusercontent.com/29851990/147409654-a7e5cab0-3886-4fae-adac-285c77734a09.png)
-<br>
-
-``` dataset
-plt.figure(figsize=(10,10)) //모양의 사이즈를 설정한다<br>
-plt.subplot(a,b,i+1) // a는 세로, b는 가로 i+1은 몇번째<br>
-plt.xticks([]) //괄호안에 설정하면 x축 좌표를 만들수있음<br>
-plt.yticks([]) //괄호안에 설정하면 y축 좌표를 만들수있음<br>
-plt.imshow(train_images[i], cmap=plt.cm.binary) // cmap=plt.cm.binary가 회색조로 이미지를 표시하는 것<br>
-plt.xlabel(class_names[train_labels[i]]) // 밑의 사진 확대하면 그림밑에 라벨있음<br>
-
-```
-
-![image](https://user-images.githubusercontent.com/29851990/147409670-a6154280-8f26-40bb-9d7a-fe2c00f89798.png)
-<br><br>
 
 <br><br><br><br>
 ## Sequential model
