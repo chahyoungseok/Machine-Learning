@@ -9,10 +9,12 @@
     <li><a href="#sequential-model">Sequential Model</a></li>
     <li><a href="#glossary">Glossary</a></li>
     <li><a href="#perceptron">Perceptron</a></li>
+    <li><a href="#activation-function">Activation Function</a></li>
+    <li><a href="#loss-function">Loss Function</a></li>
+    <li><a href="#optimizer">Optimizer</a></li>
     <li><a href="#overfit">Overfit</a></li>
     <li><a href="#mlp">MLP</a></li>
-    <li><a href="#day-9">Day 9</a></li>
-    <li><a href="#day-10">Day 10</a></li>
+    <li><a href="#cnn">CNN</a></li>
   </ol>
 </details>
 
@@ -204,7 +206,7 @@ Sequential 모델은 다음의 경우에 적합하지 않습니다.
 
 <br><br><br><br>
 
-## glossary
+## Glossary
 
 Dataset
  - 데이터베이스 자원을 효율적으로 활용하고자 도입된 개념입니다. 
@@ -456,17 +458,93 @@ backpropagation 알고리즘은 미분가능한 함수를 activation함수로 �
 
 ![image](https://user-images.githubusercontent.com/29851990/147450092-3da6b918-7442-4309-8153-9b755a449980.png)
 
+<br><br><br><br>
+
+## Activation Function
+
+### softmax
+ - 출력계층에 많이 사용이 됩니다. 
+ - 또한 앞서 말한대로 출력의 합계가 1인 activationFunc입니다. 
+ - 또한 추가적으로 np.argmax()를 사용하여 가장 높은 값을 가진 요소의 인덱스를 결정할 수 있습니다.
+ - linear는 다중출력을 할 수 있는 함수입니다. 하지만 역전파가 불가능합니다. 
+
+<br>
+
+### sigmoid
+ - 출력 값을 0에서 1로 변경해줍니다. 
+ - 하지만 밑의 함수처럼 입력신호의 총합이 크거나 작다면 gradient값이 0에 가까운 현상이 나타납니다.
+![image](https://user-images.githubusercontent.com/29851990/147453673-c9b57886-17db-47f9-b2e8-2726bed8c634.png)
+
+<br>
+
+### tanh
+ - 출력 값을 -1에서 1로 압축시키는 함수입니다. 
+ - 하지만 이것또한 sigmoid와 마찬가지로 입력신호의 총합이 크거나 작다면 gradient값이 0에 가까운 현상이 나타납니다.
+![image](https://user-images.githubusercontent.com/29851990/147453705-58a8b3de-0df7-492e-b542-b3851b2dbd29.png)
+
+<br><br><br><br>
+
+## Loss Function
+
+### MSE
+ - 평균제곱오차입니다. 
+ - 예측 값이 실제 값으로부터 얼마나 떨어져있는지를 loss라고 하는데 MSE는 loss의 평균제곱오차를 구합니다. 
+ - 특이점이 존재하면 수치가 많이 늘어나는 특징이 있습니다.
+
+![image](https://user-images.githubusercontent.com/29851990/147453850-7668d58e-6f76-414e-b359-02c567bff6d1.png)
+
+<br> 
+
+### Categorical_Crossentropy  ||  Binary_Crossentropy
+ - softmax를 사용할 때 사용하는 것이 좋은 선택입니다.
+
+<br>
+
+### MAE
+ - MSE와 마찬가지로 loss를 구해 절대값으로 반환해 평균화시킨 것입니다. 
+ - 그러므로 MSE와는 다르게 에러의 크기가 그대로 반영됩니다.
+
+![image](https://user-images.githubusercontent.com/29851990/147453884-f843e605-4b39-41b7-9698-374815639f6e.png)
+
+<br>
+
+### 
+
+<br><br><br><br>
 ## Optimizer
 
-Gradient Descent : 해당 함수의 최소값 위치를 찾기위해 비용합수의 그레디언트 반대 방향으로 정의한 step size를 가지고 조금씩 움직여가면서 최적의 파라미터를 찾으려는 방법입니다.
- 1. Batch Gradient Descent : 전체 데이터를 사용
- 2. Stochastic Gradient Descent : 하나의 데이터만을 사용
- 3. Mini-batch Gradient Descent : 데이터의 일부만을 사용
-: 오늘날에는 계산비용을 고려해 효율적인 탐색법인 3번이 가장 많이 쓰입니다.
-추가로 공부해볼 키워드 : Momentum
+최적화를 통해 lossFunc을 최소화 시키는것입니다.<br>
+손실이 특정수준으로 감소하면 모델이 입력을 출력에 매핑시킵니다.<br>
+
+<br>
+
+### metrics
+ - 모델이 기본데이터 분포를 학습했는지 확인하는데 사용됩니다. 
+ - accurate는 실제값에 기초한 정확한 예측의 백분율을 나타냅니다. 가장 많이 이용되는 것이 SGD, Adam, RMSprop입니다.
+
+<br>
+
+### Gradient Descent (GD)
+ - 해당 함수의 최소값 위치를 찾기위해 비용합수의 그레디언트 반대 방향으로 정의한 step size를 가지고 조금씩 움직여가면서 최적의 파라미터를 찾으려는 방법입니다.
+ - Batch Gradient Descent : 전체 데이터를 사용
+ - Mini-batch Gradient Descent : 데이터의 일부만을 사용
+ - Stochastic Gradient Descent : 하나의 데이터만을 사용
+
+<br>
+
+### SGD
+ - StochasticGradientDescent의 약자로 GD를 변형시킨겁니다.
+ - 먼저 GD란 모델이 가정한 예측과 실제의 값의 차이를 줄이기위해 반복적으로 기울기를 계산하여 특정변수를 변경해나가는 과정이고 SGD는 GD를 일부의 데이터만 사용하여 계산속도를 빠르게 만든 방법입니다.
+ -  learning_rate는 보통 크게 0.1로 설정했다가 0.01처럼 점진적으로 줄여나가는 것이 좋습니다.
+
+<br>
+
+### Adam || RMSprop 
+ - SGD의 learning_rate를 가진 변형이라고 볼수도 있습니다.
 
 ![image](https://user-images.githubusercontent.com/29851990/147450136-3b4e4d88-2054-4297-b0cd-72a5610c2c92.png)
 
+<br><br><br><br>
 
 ## Overfit
 
@@ -537,3 +615,138 @@ l2_model = keras.models.Sequential([
 ![image](https://user-images.githubusercontent.com/29851990/147451480-b3e54ee4-f2cf-4962-8eb5-f884b7dff111.png)
 
 ## MLP
+
+### example 1 : 손으로 쓴 숫자를 식별하는 신경망을 만들기 위한 단계의 예제입니다.
+
+``` example 1
+import numpy as np
+import matplotlib.pyplot as plt
+import tensorflow as tf
+from tensorflow.keras.datasets import mnist
+
+(x_train, y_train) ,(x_test, y_test) = mnist.load_data() #x가 문제 y가 정답같은 느낌
+unique, counts = np.unique(y_train, return_counts=True)#np.unique(return_count=True)란 지정된 배열안의 요소의 중복을 피해서의 출력과 그 요소의 개수를 배열로 출력하는 것
+print("Train labels : ", dict(zip(unique,counts)))
+
+unique, counts = np.unique(y_test,return_counts=True)
+print("Test labels: ",dict(zip(unique,counts)))
+
+indexes = np.random.randint(0, x_train.shape[0], size=25)
+images = x_train[indexes]
+labels = y_train[indexes]
+
+plt.figure(figsize=(5,5))
+for i in range(len(indexes)) :
+    plt.subplot(5,5,i+1)
+    image = images[i]
+    plt.imshow(image, cmap='gray')
+    plt.axis('off')
+
+plt.savefig("mnist-samples.png")#C:\Users\cha\PycharmProjects\pythonProject\venv 안에저장
+plt.show()
+plt.close()
+```
+
+![image](https://user-images.githubusercontent.com/29851990/147451993-a3f4f4ce-a92c-451f-81d8-ab4f627947c2.png)
+
+이 예제에는 단순히 mnist.load_data()를 통해 훈련할 수 있는 데이터와 테스트데이터를 받아와 랜덤하게 골라 matplot.lib를 통해 그림으로 띄워주는 작업을 하고 그 이미지를 위의 사진과 같이 저장해주는 작업을 하였습니다.
+
+<br>
+
+### example 2 : 손으로 쓴 숫자를 식별하는 신경망을 만들기 위한 단계의 예제입니다.
+
+앞의 example 1 에 모델을 추가하여 실제 모델을 훈련시키고 정확도를 검사하는 작업까지 했고, 아래보이는 사진처럼 구성된 모델을 사진으로 저장까지하는 작업을 했습니다. <br>
+
+``` example 2
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Activation, Dropout
+from tensorflow.keras.utils import to_categorical, plot_model
+from tensorflow.keras.datasets import  mnist
+
+(x_train, y_train), (x_test, y_test) = mnist.load_data()
+
+num_labels = len(np.unique(y_train))
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+print(y_train)
+print(y_test)
+```
+
+먼저 load_dataset() 으로 받은 데이터를 살펴보면 y_train과 y_test는 신경망 예측 계층에 적합하지 않으므로 to_categorical을 통해 10차원 배열로 바꾸었습니다.<br>
+예를들어 2는 [0,0,1,0,0,0,0,0,0,0] 와 같이 만들어 모델에 학습시킵니다.
+
+<br>
+
+``` example 2
+
+image_size = x_train.shape[1]
+input_size = image_size * image_size
+
+x_train = np.reshape(x_train,[-1, input_size]) #-1이 들어있다면 열의 개수를 input_size만큼 빠짐없이 배치해주고 행을 변칙적으로 변경시키는것
+x_train = x_train.astype('float32') / 255
+x_test = np.reshape(x_test, [-1, input_size])
+x_test = x_test.astype('float32') / 255
+
+```
+
+그 후 x_train과 x_test를 float으로 casting하고 255를 나누었습니다. <br>
+이것의 이유는 gradient의 값을 낮추기 위함입니다.
+<br>
+
+``` example 2
+batch_size = 128
+hidden_units = 256
+dropout = 0.45
+
+model = Sequential()
+model.add(Dense(hidden_units, input_dim=input_size))
+model.add(Activation('relu'))
+model.add(Dropout(dropout)) #성능향상을 위해 임의로 뉴런을 골라 누락시키는것
+model.add(Dense(hidden_units))
+model.add(Activation('relu'))
+model.add(Dropout(dropout))
+model.add(Dense(num_labels))
+model.add(Activation('softmax'))
+model.summary()
+plot_model(model, to_file='mlp-mnist.png', show_shapes=True)
+
+model.compile(loss='categorical_crossentropy',optimizer="adam",metrics=['accuracy'])
+model.fit(x_train,y_train, epochs=20, batch_size=batch_size)
+_,acc = model.evaluate(x_test,y_test,batch_size=batch_size, verbose=0)
+print("\nTest accuracy: %.1f%%" % (100.0 * acc))
+
+```
+
+다음으로 모델의 구성을 살펴보면 DenseLayer에 relu함수를 사용했고, 각각의 레이어마다 Dropout을 통해 성능을 향상시켰습니다. <br>
+또한 출력층에서는 softmax를 통해 값을 확인하였습니다.<br>
+
+![image](https://user-images.githubusercontent.com/29851990/147452169-cf95ed6e-ffc6-4823-8843-e59ea226ee2a.png)
+
+<br>
+
+#### Building a model using MLP and Keras
+
+Dense Layer는 선형연산이기 때문에 선형함수의 근사치만을 얻을 수 있는데 이번 문제의 MNIST 자릿수 분류는 비선형 프로세스인 문제점이 있습니다.<br>
+하지만 relu activationFunction을 활용하면 relu가 비선형 함수이기 때문에 문제를 풀 수 있었습니다.<br>
+relu는 다른 비선형함수들인 elu,selu,softplus,sigmoid,tanh 보다 훨씬 대중적이게 사용이 됩니다. <br>
+그 이유는 계산적이고 단순성 때문입니다. <br>
+하지만 출력층에는 sigmoid,tanh함수가 많이 사용됩니다.
+
+<br>
+
+#### Regularization
+
+일반적으로 사용하는 정규화의 방법에는 Dropout이 있습니다.<br>
+사용방법은 Dropout(dropoutIndex = 0.45)와 같이 값을 넣어주면 다음 layer에 참여할 노드의 일부를 무작위로 제거하는 방법입니다.<br>
+예를들어서 첫 번째 layer의 노드가 256이라면 (1-0.45) * 256을 하여 다음 layer에 전달하는 방식입니다.<br>
+이것은 안정적인 뉴런네트워크를 만듭니다. <br>
+다만 dropout은 출력계층에서 사용하지 않고, 또한 훈련 중에만 활성화 해야하는 주의해야할 점이 있습니다.<br>
+또한, 과대적합을 방지하기 위해 사용되는 방법은 L1 규제와 L2규제가 있습니다. <br>
+여기서 L1규제는 파라미터값을 0으로 만들기 때문에 일반적으로는 L2규제를 사용합니다. <br>
+L2규제란 가중치 제곱의 합에 비례하여 가중치에 패널티를 주는 정규화유형입니다. <br>
+L2 정규화는 가중치를 0은 아니지만 0에 가깝게 유도하는데 도움을 줍니다.
+
+<br>
+
+## CNN
