@@ -614,6 +614,8 @@ l2_model = keras.models.Sequential([
 
 ![image](https://user-images.githubusercontent.com/29851990/147451480-b3e54ee4-f2cf-4962-8eb5-f884b7dff111.png)
 
+<br><br><br><br>
+
 ## MLP
 
 ### example 1 : 손으로 쓴 숫자를 식별하는 신경망을 만들기 위한 단계의 예제입니다.
@@ -651,7 +653,7 @@ plt.close()
 
 이 예제에는 단순히 mnist.load_data()를 통해 훈련할 수 있는 데이터와 테스트데이터를 받아와 랜덤하게 골라 matplot.lib를 통해 그림으로 띄워주는 작업을 하고 그 이미지를 위의 사진과 같이 저장해주는 작업을 하였습니다.
 
-<br>
+<br><br>
 
 ### example 2 : 손으로 쓴 숫자를 식별하는 신경망을 만들기 위한 단계의 예제입니다.
 
@@ -749,4 +751,109 @@ L2 정규화는 가중치를 0은 아니지만 0에 가깝게 유도하는데 �
 
 <br>
 
-## CNN
+## CNN (Convolutional Neural Network)
+
+CNN은 분류문제를 해결하는데 쓰입니다.<br>
+
+``` cnn example 
+import numpy as np
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import  Activation, Dense, Dropout
+from tensorflow.keras.layers import Conv2D, MaxPooling2D, Flatten
+from tensorflow.keras.utils import to_categorical,plot_model
+from tensorflow.keras.datasets import mnist
+
+(x_train, y_train) , (x_test, y_test) = mnist.load_data()
+num_labels = len(np.unique(y_train))
+
+y_train = to_categorical(y_train)
+y_test = to_categorical(y_test)
+
+```
+먼저 mnist.load_data()를 통해 받은 데이터들의 배열구성이나 사이즈를 to_categorical, reshape, astype을 통해 재구성하였습니다.<br>
+<br>
+
+``` cnn example
+
+image_size = x_train.shape[1]
+x_train = np.reshape(x_train,[-1, image_size, image_size, 1])
+x_test = np.reshape(x_test,[-1, image_size, image_size, 1])
+x_train = x_train.astype('float32') / 255
+x_test = x_test.astype('float32') / 255
+
+input_shape = (image_size, image_size, 1)
+batch_size = 128
+kernel_size = 3
+pool_size = 2
+filters = 64
+dropout = 0.2
+
+model = Sequential()
+model.add(Conv2D(filters=filters,
+                 kernel_size=kernel_size,
+                 activation='relu',
+                 input_shape=input_shape))
+model.add(MaxPooling2D(pool_size))
+model.add(Conv2D(filters=filters,
+                 kernel_size=kernel_size,
+                 activation='relu'))
+model.add(MaxPooling2D(pool_size))
+model.add(Conv2D(filters=filters,
+                 kernel_size=kernel_size,
+                 activation='relu'))
+model.add(Flatten())
+model.add(Dropout(dropout))
+model.add(Dense(num_labels))
+model.add(Activation('softmax'))
+model.summary()
+plot_model(model, to_file='cnn-mnist.png', show_shapes=True)
+
+model.compile(loss='categorical_crossentropy',
+              optimizer='adam',
+              metrics=['accuracy'])
+
+model.fit(x_train,y_train, epochs=10, batch_size=batch_size)
+
+_, acc = model.evaluate(x_test,
+                        y_test,
+                        batch_size=batch_size,
+                        verbose=0)
+
+print("\nTest accuracy: %.1f%%" % (100.0 * acc))
+
+```
+
+여기서 이전과 크게 바뀐 것이 있는데 Conv2D를 사용했다는 점입니다.<br>
+Conv2D는 이미 relu함수를 포함하고있는 레이어입니다. <br>
+또한 relu에서 batch_normalization도 포함하고 있습니다. <br>
+그렇게 되면 모델 훈련중 안정성이 높아지고, deep한 CNN에 활용할 수 있습니다.
+
+![image](https://user-images.githubusercontent.com/29851990/147454948-9e0b0600-7443-44d5-8e7f-1513490f8475.png)
+
+<br>
+
+### Convolution
+MLP에서 Dense Layer가 노드의 수를 정한다면, CNN에서는 kernel이 그 작업을 합니다. <br>
+또한 Convolution이란 합성 곱 처리 결과로부터 Feature Map을 만드는 연산을 칭합니다.<br>
+아래와 같이 Feature Map은 계속해서 다른 Feature Map으로 변환이 됩니다.
+
+![image](https://user-images.githubusercontent.com/29851990/147455012-fe725b8d-e642-4c2a-a59b-d335124af7cd.png)
+
+<br>
+다만, 입력과 출력의 Feature Map 치수가 동일해야하는 경우 option='same'을 사용합니다.<br>
+그러면 입력에서 Convolution 후에 치수를 변경하지 않도록 경계 주위에 0으로 채우게됩니다.<br>
+이러한 방법을 zero padding이라고 합니다.
+
+<br>
+
+### Pooling operations
+
+CNN을 사용하면서 추가한 Layer중 Pooling Layer가 있습니다.<br>
+MaxPooling2D는 아래의 그림과 같이 patch_size를 1로 줄이고 그 영역의 Max값을 구해 새로운 Feature Map를 만듭니다.<br>
+
+![image](https://user-images.githubusercontent.com/29851990/147455079-77b0083c-833b-492c-a5a1-b2ad780e75d6.png)
+
+<br>
+
+MaxPooling2D의 큰 특징은 map_size를 줄이는데에 있습니다.<br>
+또한 Pooling 방식에는 Average와 Min도 있습니다.
