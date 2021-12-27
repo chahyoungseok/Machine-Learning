@@ -606,7 +606,5 @@ MaxPooling2D는 아래의 그림과 같이 patch_size를 1로 줄이고 그 영�
 
 ![image](https://user-images.githubusercontent.com/29851990/147455079-77b0083c-833b-492c-a5a1-b2ad780e75d6.png)
 
-<br>
-
 MaxPooling2D의 큰 특징은 map_size를 줄이는데에 있습니다.<br>
 또한 Pooling 방식에는 Average와 Min도 있습니다.
