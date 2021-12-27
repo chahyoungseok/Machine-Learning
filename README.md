@@ -4,11 +4,10 @@
 <details open="open">
   <summary>Table of Contents</summary>
   <ol>
-    <li><a href="#day-1">Day 1</a></li>
-    <li><a href="#day-2">Day 2</a></li>
-    <li><a href="#day-3">Day 3</a></li>
-    <li><a href="#day-4">Day 4</a></li>
-    <li><a href="#day-5">Day 5</a></li>
+    <li><a href="#keras-development">Keras Development</a></li>
+    <li><a href="#import-dataset-mnist-fashion">import dataset MNIST fashion</a></li>
+    <li><a href="#sequential-model">Sequential Model</a></li>
+    <li><a href="#glossary">lossary</a></li>
     <li><a href="#day-6">Day 6</a></li>
     <li><a href="#day-7">Day 7</a></li>
     <li><a href="#day-8">Day 8</a></li>
@@ -17,11 +16,7 @@
   </ol>
 </details>
 
-## Day 1
-
-IDE : PyCharm 사용
-
-Keras 개발과정
+## keras development
 
 1. 데이터 생성 <br>
 2. 모델 구축 model = Sequential(); / model.add(...) <br>
@@ -57,7 +52,8 @@ Dense
 노드의 활성화 함수는 activation="...." 형태로 나타내며, 대표적인 활성화 함수로는 선형회귀 문제에서는 ‘linear’, 일반적인 classification 경우에는 ‘sigmoid’, 'softmax', 'relu', 'tanh' 등이 데이터에 따라 다양하게 사용됨
 
 <br><br>
-### ---패션 MNIST 데이터셋 임포트하기(기초적인 분류 문제)--
+
+## import dataset mnist fashion 
 https://www.tensorflow.org/tutorials/keras/classification?hl=ko
 
 import tensorflow as tf / 텐서플로우 import<br>
@@ -86,7 +82,7 @@ plt.xlabel(class_names[train_labels[i]]) // 밑의 사진 확대하면 그림밑
 <br><br>
 
 <br><br><br><br>
-### Sequential Model
+## sequential model
 
 Sequential 모델은 각 레이어에 정확히 하나의 입력 텐서와 하나의 출력 텐서가 있는 일반 레이어 스택에 적합합니다.
 
@@ -139,7 +135,7 @@ Sequential 모델은 다음의 경우에 적합하지 않습니다.
 
 <br><br><br><br>
 
-### 용어 정리
+### glossary
 
 Dataset
  - 데이터베이스 자원을 효율적으로 활용하고자 도입된 개념입니다. 
@@ -208,3 +204,8 @@ optimizer
 
 유튜브 Keras강의
  - https://www.youtube.com/watch?v=Ke70Xxj2EJw&t=1223s
+
+<br><br><br><br>
+
+
+
