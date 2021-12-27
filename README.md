@@ -574,7 +574,7 @@ l2_model = keras.models.Sequential([
 
 <br>
 
-#### Regularization
+### Regularization
 
 일반적으로 사용하는 정규화의 방법에는 Dropout이 있습니다.<br>
 사용방법은 Dropout(dropoutIndex = 0.45)와 같이 값을 넣어주면 다음 layer에 참여할 노드의 일부를 무작위로 제거하는 방법입니다.<br>
