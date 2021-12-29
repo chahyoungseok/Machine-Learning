@@ -552,11 +552,11 @@ for epoch in range(200) :
 
 
 ```
-<br>
+
 Gradient Descent의 동작원리를 위의 코드로 나마 조금 더 쉽게 이해할 수 있습니다.
 
 
-<br>
+<br><br>
 
 ### SGD
  - StochasticGradientDescent의 약자로 GD를 변형시킨겁니다.
