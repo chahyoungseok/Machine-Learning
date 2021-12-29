@@ -492,6 +492,70 @@ backpropagation 알고리즘은 미분가능한 함수를 activation함수로 �
  - Mini-batch Gradient Descent : 데이터의 일부만을 사용
  - Stochastic Gradient Descent : 하나의 데이터만을 사용
 
+``` example GD
+
+import matplotlib.pyplot as plt
+import numpy as np
+import tensorflow as tf
+from tensorflow import keras
+
+#임의로 x의 값을 100개 정합니다
+#임의로 그래프를 하나 만듭니다
+x = np.random.rand(100)
+y = 0.5 * x + 0.2
+
+#이따 weight값과 bias값이 갱신될때 설정한 주기마다 해당 그래프의 차이를 보여주는 함수를 만듭니다
+def plot_prediction(y_pred, y) :
+    plt.figure(figsize=(8,6))
+    plt.scatter(x,y_pred)
+    plt.scatter(x,y)
+    plt.show()
+
+#임의로 -1 에서 1사이의 값으로 weight와 bias값을 랜덤하게 설정합니다
+W = np.random.uniform(-1,1)
+b = np.random.uniform(-1,1)
+
+#랜덤으로 설정된 weight 와 bias를 알맞은 값으로 변경될때까지 200번의 훈련을 시킵니다
+for epoch in range(200) :
+
+    #현재 설정된 weight 와 bias값으로 y의 예측값을 구합니다
+    Y_pred = W * x + b
+
+    #에러율이 0.001미만일 때 프로그램을 종료합니다
+    error = np.abs(Y_pred - y).mean()
+    if error < 0.001 :
+        break
+
+    #임의로 learning_rate를 설정합니다
+    learning_rate = 0.7
+
+    #해당 공식을 사용해 weight 와 bias를 Gradient Descent한 값을 구합니다
+    W_gred = learning_rate * ((Y_pred - y)*x).mean()
+    B_gred = learning_rate * (Y_pred - y).mean()
+
+    #Gradient Descent한 weight 와 bias값을 갱신해줍니다
+    W = W - W_gred
+    b = b - B_gred
+
+    #훈련 20번마다 한번씩 그래프를 띄워줍니다
+    if epoch % 20 ==0 :
+        Y_pred = W * x + b
+        plot_prediction(Y_pred, y)
+
+
+#cost함수 : 모델이 가정한 예측과 실제의 값이 얼마나 차이가 나는지를 나타내는 척도
+#cost(w,b) = min시그마(Wxi + b + yi)^2
+#cost함수를 쓸때 왜 최소제곱법을 쓰는가? 절댓값을 쓰게되면 컴퓨터 성능저하
+#경사하강법(Gradient Descent) : cost함수를 줄이기위해 반복적으로 기울기를 계산하여 변수의값을 변경해나가는 과정
+# y=x^2 기준)) 기울기를 조사해봤을때(미분) 음수라면 예측값이 실제값보다 왼쪽에 있으니까 오른쪽으로(+), 양수라면 왼쪽으로(-)
+# 위의 x,y좌표계는 w,cost / b,cost 둘다 포함
+
+
+```
+<br>
+Gradient Descent의 동작원리를 위의 코드로 나마 조금 더 쉽게 이해할 수 있습니다.
+
+
 <br>
 
 ### SGD
