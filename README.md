@@ -258,11 +258,7 @@ optimizer
 ### Perceptron Example
 ``` python
 
-import tensorflow as tf
-from tensorflow import keras
-
 import numpy as np
-import matplotlib.pyplot as plt
 
 # inputData01에서 0과 1을 적절히 조합할만한 배열을 만듭니다.
 inputData01 = np.array([0,0,1,1,0,1,0,1]).reshape(2,4)
