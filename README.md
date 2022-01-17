@@ -277,7 +277,7 @@ def perceptron1 (input1, input2) :
     weight1 = 1
     weight2 = 1
     bias = 0
-    result = (weight1 * input1) + (weight2 * input2) + bias;
+    result = (weight1 * input1) + (weight2 * input2) + bias
 
     if(result > 0) :
         return 1
@@ -289,7 +289,7 @@ def perceptron2(input1, input2):
     weight1 = 1
     weight2 = 1
     bias = -1
-    result = (weight1 * input1) + (weight2 * input2) + bias;
+    result = (weight1 * input1) + (weight2 * input2) + bias
 
     if (result > 0):
         return 1
@@ -301,7 +301,7 @@ def perceptron3(input1, input2):
     weight1 = 1
     weight2 = -2
     bias = 0
-    result = (weight1 * input1) + (weight2 * input2) + bias;
+    result = (weight1 * input1) + (weight2 * input2) + bias
 
     if (result > 0):
         return 1
@@ -313,7 +313,7 @@ def perceptron4 (input1, input2) :
     weight1 = 1
     weight2 = 1
     bias = 2
-    result = (weight1 * input1) + (weight2 * input2) + bias;
+    result = (weight1 * input1) + (weight2 * input2) + bias
 
     if(result > 0) :
         return 1
@@ -325,7 +325,7 @@ def perceptron5(input1, input2):
     weight1 = 1
     weight2 = 1
     bias = -1
-    result = (weight1 * input1) + (weight2 * input2) + bias;
+    result = (weight1 * input1) + (weight2 * input2) + bias
 
     if (result > 0):
         return 1
@@ -337,7 +337,7 @@ def perceptron6(input1, input2):
     weight1 = 1
     weight2 = -2
     bias = 0
-    result = (weight1 * input1) + (weight2 * input2) + bias;
+    result = (weight1 * input1) + (weight2 * input2) + bias
 
     if (result > 0):
         return 1
