@@ -7,6 +7,7 @@
     <li><a href="#keras-development">Keras Development</a></li>
     <li><a href="#sequential-model">Sequential Model</a></li>
     <li><a href="#glossary">Glossary</a></li>
+    <li><a href="#regression">Regression</a></li>
     <li><a href="#perceptron">Perceptron</a></li>
     <li><a href="#activation-function">Activation Function</a></li>
     <li><a href="#loss-function">Loss Function</a></li>
@@ -235,6 +236,72 @@ optimizer
 
 유튜브 Keras강의
  - https://www.youtube.com/watch?v=Ke70Xxj2EJw&t=1223s
+
+<br><br><br><br>
+
+## Regression
+
+회귀모델
+ - 연속성 데이터 y와 이것의 원인이 되는 x와의 관계를 추정하기 위해 만든 형식
+ - y = f(x) + e (단 e는 실제 환경적인 오차 or 잡음)
+
+회귀분석
+ - 인과관계를 수학적으로 분석하는 것
+ - 종속변수 y와 독립변수 x의 관계에 따라서 선형, 비선형으로 나뉘게 됩니다
+
+<br>
+
+### linear regreesion or non-linear regression
+ - 1. Function
+ - 2. Single Layer or Multi Layer
+ - 3. Activation Function
+
+<br>
+
+구분하는방법
+ - Regression의 linear 유무는 설명변수 x에 대해서 linear한지 안한지로 구분하지않습니다.
+ - 식이 갖는 파라미터(회귀변수)에 대하여 linear한지 안한지로 구분합니다.
+
+<br>
+
+#### 1. Function (activation Function이 y=x라고 가정합니다.)
+
+a,b에 대하여 linear하므로 linear regreesion이라 부를수 있습니다.
+
+![1](https://user-images.githubusercontent.com/29851990/152635221-5f943ddb-e98f-4af0-8d40-21d88d68f602.PNG)
+
+a,b,c에 대하여 linear하므로 linear regreesion이라 부를수 있습니다.
+
+![2](https://user-images.githubusercontent.com/29851990/152635463-3b162c75-06f2-43ba-af2b-3b28e5f88375.PNG)
+
+양변에 자연로그 ln을 취해주면 ln(y) = ln(a) + bln(x)에서 y_tilda = a_tilda + b * x_tilda이므로 linear regreesion으로 볼 수 있습니다.
+
+![3](https://user-images.githubusercontent.com/29851990/152635468-ad18edc1-7eab-422c-a36d-aef5ce20f375.PNG)
+
+양변에  (1 - y)로 나누어주면 ln(y / 1 - y) = ax^2 + bx + c가 되므로 linear regreesion으로 볼 수 있습니다.
+
+![4](https://user-images.githubusercontent.com/29851990/152635548-da5b4cbf-46ef-4365-8409-aa5db3c6c272.PNG)
+
+아래와 같은 경우의 함수는 linear regreesion을 사용할 수 없습니다.
+
+![5](https://user-images.githubusercontent.com/29851990/152635690-51f11fa3-a45f-480d-b705-82ebf85ab856.PNG)
+
+<br>
+
+#### 2. Single Layer or Multi Layer
+
+아래의 사진은 Multi Layer의 출력을 나타낸것입니다. <br>
+최종결과는 결국 x1앞의 계수를 w로 치환하며 linearizable 해집니다.<br>
+따라서 Multi Layer라고 하여 non-linear regression이라는 표현은 맞지않습니다.
+
+![6](https://user-images.githubusercontent.com/29851990/152636126-8ad1f0da-921a-4d1d-b7a1-6b87673618df.PNG)
+
+#### 3. Activation Function
+
+결과론 적으로 activation Function이 linear와 non-linear를 결정짓는데 가장 중요한 역할을 합니다. <br>
+1번과 2번을 자세히 보면 알겠지만 activation function이 y = x라면 Multi Layer여도 linear합니다. <br>
+activation funcation이 non-linear한 function을 쓰게된다면 파라미터들에 대해서는 linear해질 수 없습니다. <br>
+
 
 <br><br><br><br>
 
