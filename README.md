@@ -300,7 +300,7 @@ a,b,c에 대하여 linear하므로 linear regreesion이라 부를수 있습니�
 
 결과론 적으로 activation Function이 linear와 non-linear를 결정짓는데 가장 중요한 역할을 합니다. <br>
 1번과 2번을 자세히 보면 알겠지만 activation function이 y = x라면 Multi Layer여도 linear합니다. <br>
-하지만 activation funcation이 non-linear한 function을 쓰게된다면 파라미터들에 대해서는 linear해질 수 없습니다. <br>
+하지만 activation funcation이 non-linear한 function을 쓰게된다면 보편적으론 파라미터들에 대해서는 linear해질 수 없습니다. <br>
 
 
 <br><br><br><br>
