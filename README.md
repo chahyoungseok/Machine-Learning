@@ -13,7 +13,7 @@
     <li><a href="#loss-function">Loss Function</a></li>
     <li><a href="#optimizer">Optimizer</a></li>
     <li><a href="#overfit">Overfit</a></li>
-    <li><a href="#cnn">CNN</a></li>
+    <li><a href="https://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE10664524">연구논문-링크</a></li>
   </ol>
 </details>
 
